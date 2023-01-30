@@ -4,6 +4,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FcGoogle } from 'react-icons/fc'
 import { useAuth } from '@/contexts/AuthContext';
+import { useNotification } from '@/contexts/NotificationToast';
 
 type SingUpForm = {
   email: string,
@@ -21,6 +22,8 @@ const validation = yup.object({
 
 function SingUp() {
   const { singUp } = useAuth()
+  const { addToast } = useNotification()
+
   const { register, handleSubmit, formState: { errors } } = useForm<SingUpForm>({
     resolver: yupResolver(validation)
   })
@@ -31,7 +34,7 @@ function SingUp() {
     // TODO: Redirect para tela de Login com Toast informando que foi criado.
     if (created) return
 
-    // TODO: Caso retorne null é devido o usuário já existir na base
+    addToast({ message: 'Ooops! Não foi possível criar a conta, tente novamente!', type: 'error'})
   }, [])
 
   return (
@@ -52,18 +55,18 @@ function SingUp() {
             {errors.name?.message && <p className='text-xs font-semibold mt-1 text-red-700'>{errors.name.message}</p>}
           </div>
           <div className="mb-5 w-full">
-            <input {...register('email')} placeholder='E-mail' type='email' className="w-full border rounded-lg p-3 text-[#ADB5BD] text-xs border-[#CED4DA] transition duration-150 ease-in-out focus:border-[#35025a]" />
+            <input {...register('email')} placeholder='E-mail' autoComplete="username" type='email' className="w-full border rounded-lg p-3 text-[#ADB5BD] text-xs border-[#CED4DA] transition duration-150 ease-in-out focus:border-[#35025a]" />
             {errors.email?.message && <p className='text-xs font-semibold mt-1 text-red-700'>{errors.email.message}</p>}
           </div>
 
           <div className="mb-5 w-full">
-            <input {...register('password')} type='password' placeholder='Senha' className="w-full border rounded-lg p-3 text-[#ADB5BD] text-xs border-[#CED4DA] transition duration-150 ease-in-out focus:border-[#35025a]" />
+            <input {...register('password')} autoComplete="current-password" type='password' placeholder='Senha' className="w-full border rounded-lg p-3 text-[#ADB5BD] text-xs border-[#CED4DA] transition duration-150 ease-in-out focus:border-[#35025a]" />
             {errors.password?.message && <p className='text-xs font-semibold mt-1 text-red-700'>{errors.password.message}</p>}
           </div>
 
           <div className="mb-5 w-full flex flex-row gap-5">
             <input type='checkbox' {...register('term')} />
-            <label className='text-xs'>Eu concordo com <span className='font-semibold'>Termos e Condições</span></label>
+            <label className={`text-xs ${errors.term?.message ? 'text-red-700' : 'text-black'}`}>Eu concordo com <span className='font-semibold'>Termos e Condições</span></label>
           </div>
 
           <button type='submit' className="bg-[#343A40] w-full p-3 text-md text-white rounded-lg focus:outline-none">Criar conta</button>
