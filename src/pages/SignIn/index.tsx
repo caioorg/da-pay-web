@@ -5,6 +5,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FcGoogle } from 'react-icons/fc'
 import { useAuth } from '@/contexts/AuthContext'
+import Field from '@/common/components/Field'
 
 type SignInForm = {
   email: string,
@@ -39,15 +40,8 @@ function SignIn() {
         </div>
         <p className='text-xs text-[#ADB5BD] font-semibold text-center'>ou</p>
         <form onSubmit={handleSubmit(fnSubmitForm)} autoComplete='off'>
-          <div className="mb-5 w-full">
-            <input {...register('email')} placeholder='E-mail' type='email' className="w-full border rounded-lg p-3 text-[#ADB5BD] text-xs border-[#CED4DA] transition duration-150 ease-in-out focus:border-[#35025a]" />
-            {errors.email?.message && <p className='text-xs font-semibold mt-1 text-red-700'>{errors.email.message}</p>}
-          </div>
-
-          <div className="mb-5 w-full">
-            <input {...register('password')} type='password' placeholder='Senha' className="w-full border rounded-lg p-3 text-[#ADB5BD] text-xs border-[#CED4DA] transition duration-150 ease-in-out focus:border-[#35025a]" />
-            {errors.password?.message && <p className='text-xs font-semibold mt-1 text-red-700'>{errors.password.message}</p>}
-          </div>
+          <Field {...register('email')} type='email' label='E-mail' error={errors.email?.message} />
+          <Field {...register('password')} type='password' label='Senha' error={errors.password?.message} />
 
           <button type='submit' className="bg-[#343A40] w-full p-3 text-md text-white rounded-lg focus:outline-none">Entrar</button>
         </form>

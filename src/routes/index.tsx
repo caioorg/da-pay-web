@@ -10,7 +10,7 @@ export default () => {
   return (
     <Router>
       <Suspense fallback={<div>loading...</div>}>
-        {isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
+        {!isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
       </Suspense>
     </Router>
   )

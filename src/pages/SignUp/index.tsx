@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FcGoogle } from 'react-icons/fc'
 import { useAuth } from '@/contexts/AuthContext';
 import { useNotification } from '@/contexts/NotificationToast';
+import Field from '@/common/components/Field'
 
 type SingUpForm = {
   email: string,
@@ -50,19 +51,9 @@ function SingUp() {
         </div>
         <p className='text-xs text-[#ADB5BD] font-semibold text-center'>ou</p>
         <form onSubmit={handleSubmit(fnSubmitForm)} autoComplete='off'>
-          <div className="mb-5 w-full">
-            <input {...register('name')} placeholder='Nome Completo' type='text' className="w-full border rounded-lg p-3 text-[#ADB5BD] text-xs border-[#CED4DA] transition duration-150 ease-in-out focus:border-[#35025a]" />
-            {errors.name?.message && <p className='text-xs font-semibold mt-1 text-red-700'>{errors.name.message}</p>}
-          </div>
-          <div className="mb-5 w-full">
-            <input {...register('email')} placeholder='E-mail' autoComplete="username" type='email' className="w-full border rounded-lg p-3 text-[#ADB5BD] text-xs border-[#CED4DA] transition duration-150 ease-in-out focus:border-[#35025a]" />
-            {errors.email?.message && <p className='text-xs font-semibold mt-1 text-red-700'>{errors.email.message}</p>}
-          </div>
-
-          <div className="mb-5 w-full">
-            <input {...register('password')} autoComplete="current-password" type='password' placeholder='Senha' className="w-full border rounded-lg p-3 text-[#ADB5BD] text-xs border-[#CED4DA] transition duration-150 ease-in-out focus:border-[#35025a]" />
-            {errors.password?.message && <p className='text-xs font-semibold mt-1 text-red-700'>{errors.password.message}</p>}
-          </div>
+          <Field {...register('name')} type='text' label='Nome Completo' error={errors.name?.message} />
+          <Field {...register('email')} type='email' label='E-mail' error={errors.email?.message} />
+          <Field {...register('password')} type='password' label='Senha' error={errors.password?.message} />
 
           <div className="mb-5 w-full flex flex-row gap-5">
             <input type='checkbox' {...register('term')} />
