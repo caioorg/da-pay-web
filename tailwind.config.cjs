@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Poppins', 'Arial', 'sans-serif'],
+        'sans': ['Inter', 'Arial', 'sans-serif'],
       },
       backgroundImage: {
         'signin': "url('/bg.svg')",

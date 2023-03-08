@@ -1,7 +1,11 @@
 import React from 'react';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs'
 
-const TableEntry: React.FC = () => {
+type TableEntryProps = {
+  resume?: boolean
+}
+
+const TableEntry: React.FC<TableEntryProps> = ({ resume }) => {
   return (
     <table className="table-auto w-full">
       <thead>
@@ -11,7 +15,7 @@ const TableEntry: React.FC = () => {
           <th className='text-start py-3'>Descritivo</th>
           <th className='text-start py-3'>Valor</th>
           <th className='text-start py-3'>Criado por</th>
-          <th className='text-start py-3'>Ações</th>
+          {!resume && <th className='text-start py-3'>Ações</th>}
         </tr>
       </thead>
       <tbody>
@@ -25,10 +29,13 @@ const TableEntry: React.FC = () => {
           <td className='text-start py-3 font-light text-sm'>Mc'Donalds</td>
           <td className='text-start py-3 font-light text-sm'>R$ 90,00</td>
           <td className='text-start py-3 font-light text-sm'>Caio Almeida</td>
-          <th className='text-start py-3 font-light text-sm'>
-            <button title='Editar'><BsPencilSquare className='w-4 h-4 mr-2' /></button>
-            <button title='Excluir'><BsTrash className='w-4 h-4'/></button>
-          </th>
+          {!resume && (
+            <th className='text-start py-3 font-light text-sm'>
+              <button title='Editar'><BsPencilSquare className='w-4 h-4 mr-2' /></button>
+              <button title='Excluir'><BsTrash className='w-4 h-4'/></button>
+            </th>
+          )}
+
         </tr>
       </tbody>
     </table>

@@ -1,0 +1,26 @@
+.circle-graph {
+    --percent: 0
+}
+
+.circle-graph circle {
+    stroke-dasharray: 618;
+    stroke-dashoffset: 618;
+}
+
+.circle-graph circle:nth-child(1) {
+    stroke-dashoffset: 0;
+}
+
+.circle-graph circle:nth-child(2) {
+    stroke-dashoffset: calc(618 - (618 * var(--percent)) / 100);
+    stroke-linecap: round;
+    animation: progress 1s ease-in-out backwards;
+    animation-delay: 1s;
+}
+
+@keyframes progress {
+    0% {
+        stroke-dasharray: 618;
+        stroke-dashoffset: 618;
+    }
+}

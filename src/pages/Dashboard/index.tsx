@@ -1,63 +1,79 @@
-import { VscGraph } from 'react-icons/vsc'
-import Field from '@/common/components/Field';
+import { FaSmile, FaHome } from 'react-icons/fa'
+import CircleGraph from '@/common/components/CircleGraph';
 import TableEntry from '@/common/components/TableEntry';
 
 const Dashboard: React.FC = () => {
 
   return (
-    <>
-      <div className="w-full bg-[#1C084D] h-60 flex items-center justify-center bg-cover bg-no-repeat">
-        <div className='container'>
-          <h1 className="text-4xl font-semibold text-white">Dasboard</h1>
-        </div>
-      </div>
+    <div className='w-full h-full flex items-center text-white'>
       <div className='container m-auto'>
-        <div className='grid grid-cols-4 gap-3 -mt-10 mb-5'>
-          <div className='border rounded-lg px-6 py-4 shadow-md bg-white flex flex-col justify-evenly'>
-            <p className='text-md text-gray-400 mb-3'>Periodo</p>
-            <Field type='date' label='Data' />
-            <button className="bg-[#8607F4] w-full p-3 text-md text-white font-bold rounded-lg focus:outline-none">Pesquisar</button>
+        <h1 className='text-4xl font-bold mb-10 flex items-center gap-4'><FaHome size={42} /> Dasboard</h1>
+        <div className='grid grid-cols-3 gap-8 mb-14'>
+          <div className='bg-[#363447] p-7 rounded-2xl flex flex-col items-center justify-between shadow-md min-h-[379px]'>
+            <span className='text-2xl font-semibold'>NPS Mês Atual</span>
+            <div className='flex flex-col gap-4 items-center'>
+              <FaSmile size={54} color='#81FBB8' />
+              <span className='text-[#81FBB8] text-2xl font-semibold'>Excelente</span>
+              <span className='text-sm font-medium'>Saldo de: R$ 3.000,00</span>
+            </div>
           </div>
-          <div className='border rounded-lg px-6 py-4 shadow-md bg-white flex flex-col justify-evenly'>
-            <p className='text-md text-gray-400'>Receita</p>
-            <p className='flex flex-row font-bold justify-between w-full items-center'>
-              R$ 7.500,00
-              <span><VscGraph className='w-10 h-10 text-[#8607F4]' /></span>
-            </p>
-            <p className='text-[10px] text-gray-400'>
-              <span className='font-semibold text-green-600'>+3.1%</span> que mês passado
-            </p>
+          <div className='bg-[#363447] p-7 rounded-2xl flex flex-col gap-8 items-center justify-between shadow-md min-h-[379px]'>
+            <span className='text-2xl font-semibold'>Receita</span>
+            <CircleGraph
+              content='alcançada'
+              percent='80'
+              id='circle-received'
+              width='72'
+              height='72'
+              defaultColor='#D9D9D9'
+              borderPixel='35'
+              primaryColor='#CE9FFC'
+              secondaryColor='#7367F0'
+            />
+
+            <div className='flex justify-around w-full'>
+              <p className='flex items-center gap-1 text-sm font-medium'>
+                <span className='w-4 h-4 rounded-full bg-[#4A4556] inline-flex' />
+                Estimativa: R$ 17.000,00
+              </p>
+              <p className='flex items-center gap-1 text-sm font-medium'>
+                <span className='w-4 h-4 rounded-full bg-gradient-to-r from-[#CE9FFC] to-[#7367F0] inline-flex' />
+                Alcançado: 15.000,00
+              </p>
+            </div>
           </div>
-          <div className='border rounded-lg px-6 py-4 shadow-md bg-white flex flex-col justify-evenly'>
-            <p className='text-md text-gray-400'>Desespesa</p>
-            <p className='flex flex-row font-bold justify-between w-full items-center'>
-              R$ 7.500,00
-              <span><VscGraph className='w-10 h-10 text-[#8607F4]' /></span>
-            </p>
-            <p className='text-[10px] text-gray-400'>
-              <span className='font-semibold text-red-600'>-3.1%</span> que mês passado
-            </p>
-          </div>
-          <div className='border rounded-lg px-6 py-4 shadow-md bg-white flex flex-col justify-evenly'>
-            <p className='text-md text-gray-400'>Balanço</p>
-            <p className='flex flex-row font-bold justify-between w-full items-center'>
-              R$ 7.500,00
-              <span><VscGraph className='w-10 h-10 text-[#8607F4]' /></span>
-            </p>
-            <p className='text-[10px] text-gray-400'>
-              <span className='font-semibold text-green-600'>+3.1%</span> que mês passado
-            </p>
+          <div className='bg-[#363447] p-7 rounded-2xl flex flex-col items-center justify-between shadow-md min-h-[379px]'>
+            <span className='text-2xl font-semibold'>Despesas</span>
+            <CircleGraph
+              content='lançadas'
+              percent='30'
+              id='circle-sell'
+              width='72'
+              height='72'
+              defaultColor='#D9D9D9'
+              borderPixel='35'
+              primaryColor='#DF9780'
+              secondaryColor='#A66DE9'
+            />
+
+            <div className='flex justify-around w-full'>
+              <p className='flex items-center gap-1 text-sm font-medium'>
+                <span className='w-4 h-4 rounded-full bg-[#4A4556] inline-flex' />
+                Fixas: R$ 8.000,00
+              </p>
+              <p className='flex items-center gap-1 text-sm font-medium'>
+                <span className='w-4 h-4 rounded-full bg-gradient-to-r from-[#DF9780] to-[#A66DE9] inline-flex' />
+                Relativas: 2.000,00
+              </p>
+            </div>
           </div>
         </div>
-
-        <div className='grid grid-cols-1 shadow-md bg-white'>
-          <div className='border rounded-lg px-6 py-4 shadow-md bg-white'>
-            <h2 className='text-md text-gray-400 mb-4'>Lançamentos</h2>
-            <TableEntry />
-          </div>
+        <div className='bg-[#363447] p-7 rounded-2xl shadow-md'>
+          <h2 className='text-2xl font-semibold mb-8'>Lançamentos Recentes</h2>
+          <TableEntry resume />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
