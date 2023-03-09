@@ -15,10 +15,10 @@ type CircleGraphProps = {
 
 const CircleGraph: React.FC<CircleGraphProps> = ({ height, width, borderPixel, defaultColor, id, primaryColor, secondaryColor, percent, content }) => {
   return (
-    <div className='relative'>
-      <svg viewBox='0 0 232 232' className={`w-${width} h-${height} -rotate-90 circle-graph`} style={{ '--percent': percent } as React.CSSProperties}>
-          <circle r='98.5' cx='50%' cy='50%' opacity='0.1' stroke={defaultColor} className={`stroke-[${borderPixel}px] fill-none`} />
-          <circle r='98.5' cx='50%' cy='50%' stroke={`url(#${id})`} className={`stroke-[${borderPixel}px] fill-none`}  />
+    <div className={`w-${width} h-${height} relative`}>
+      <svg viewBox='0 0 232 232' className={`w-${width} h-${height} -rotate-90 circle-graph`} style={{ '--circle': percent, '--stroke': borderPixel } as React.CSSProperties}>
+          <circle r='98.5' cx='50%' cy='50%' opacity='0.1' stroke={defaultColor} className={`fill-none`} />
+          <circle r='98.5' cx='50%' cy='50%' stroke={`url(#${id})`} className={`fill-none`}  />
           <defs>
           <linearGradient id={id} x1='-9' y1='82' x2='145' y2='178' gradientUnits='userSpaceOnUse'>
               <stop stopColor={primaryColor} />
@@ -31,7 +31,6 @@ const CircleGraph: React.FC<CircleGraphProps> = ({ height, width, borderPixel, d
         {content && <p>{content}</p>}
       </div>
     </div>
-
   )
 }
 

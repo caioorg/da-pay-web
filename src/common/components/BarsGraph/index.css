@@ -1,0 +1,10 @@
+.bars {
+    height: var(--bars);
+    animation: up 1.4s;
+}
+
+@keyframes up {
+    0% {
+        height: 0;
+    }
+}
