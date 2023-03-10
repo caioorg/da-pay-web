@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FcGoogle } from 'react-icons/fc'
 import { useAuth } from '@/contexts/AuthContext';
 import { useNotification } from '@/contexts/NotificationToast';
-import Field from '@/common/components/Field'
+import Field from '@/common/components/FieldText'
 
 type SingUpForm = {
   email: string,

@@ -7,7 +7,7 @@ type TableEntryProps = {
 
 const TableEntry: React.FC<TableEntryProps> = ({ resume }) => {
   return (
-    <table className="table-auto w-full">
+    <table className="table-auto w-full text-white">
       <thead>
         <tr className='border-b'>
           <th className='text-start py-3'>Data</th>

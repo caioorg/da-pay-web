@@ -1,5 +1,7 @@
 .circle-graph {
-    --circle: 0
+    --circle: 0;
+    width: 14rem;
+    height: 14rem;
 }
 
 .circle-graph circle {

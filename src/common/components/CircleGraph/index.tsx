@@ -15,7 +15,7 @@ type CircleGraphProps = {
 
 const CircleGraph: React.FC<CircleGraphProps> = ({ height, width, borderPixel, defaultColor, id, primaryColor, secondaryColor, percent, content }) => {
   return (
-    <div className={`w-${width} h-${height} relative`}>
+    <div className='relative'>
       <svg viewBox='0 0 232 232' className={`w-${width} h-${height} -rotate-90 circle-graph`} style={{ '--circle': percent, '--stroke': borderPixel } as React.CSSProperties}>
           <circle r='98.5' cx='50%' cy='50%' opacity='0.1' stroke={defaultColor} className={`fill-none`} />
           <circle r='98.5' cx='50%' cy='50%' stroke={`url(#${id})`} className={`fill-none`}  />

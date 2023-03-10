@@ -15,14 +15,14 @@ const Dashboard: React.FC = () => {
             <span className='text-sm font-medium'>Saldo de: R$ 3.000,00</span>
           </div>
         </div>
-        <div className='bg-[#363447] p-7 rounded-2xl flex flex-col gap-8 items-center justify-between shadow-md min-h-[379px]'>
+        <div className='bg-[#363447] p-7 rounded-2xl flex w- flex-col gap-8 items-center justify-between shadow-md min-h-[379px] relative'>
           <span className='text-2xl font-semibold'>Receita</span>
           <CircleGraph
             content='alcançada'
             percent='80'
             id='circle-received'
-            width='52'
-            height='52'
+            width='42'
+            height='42'
             defaultColor='#D9D9D9'
             borderPixel='20'
             primaryColor='#CE9FFC'
@@ -40,14 +40,14 @@ const Dashboard: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className='bg-[#363447] p-7 rounded-2xl flex flex-col items-center justify-between shadow-md min-h-[379px]'>
+        <div className='bg-[#363447] p-7 rounded-2xl flex flex-col items-center justify-between shadow-md min-h-[379px] relative'>
           <span className='text-2xl font-semibold'>Despesas</span>
           <CircleGraph
             content='lançadas'
             percent='30'
             id='circle-sell'
-            width='52'
-            height='52'
+            width='42'
+            height='42'
             defaultColor='#D9D9D9'
             borderPixel='20'
             primaryColor='#DF9780'
