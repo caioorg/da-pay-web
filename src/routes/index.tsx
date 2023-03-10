@@ -8,7 +8,7 @@ export default () => {
   const { isAuthenticated } = useAuth()
 
   return (
-    <Router>
+    <Router basename='/da-pay-web'>
       <Suspense fallback={<div>loading...</div>}>
         {!isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
       </Suspense>
