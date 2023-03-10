@@ -18,13 +18,13 @@ const validation = yup.object({
 })
 
 function SignIn() {
-  const { singIn } = useAuth()
+  const { signInWithGoogle, signInWithCredentials } = useAuth()
   const { register, handleSubmit, formState: { errors } } = useForm<SignInForm>({
     resolver: yupResolver(validation)
   })
 
   const fnSubmitForm = useCallback(({ email, password }: SignInForm) => {
-    singIn(email, password)
+    signInWithCredentials(email, password)
   }, [])
 
   return (
@@ -33,7 +33,7 @@ function SignIn() {
       <div className="w-full max-w-lg rounded-3xl py-3 flex flex-col gap-6 px-11 bg-white -mt-16">
         <p className='text-xs text-black mt-4 font-semibold text-center'>Entrar com:</p>
         <div className='w-full justify-center flex gap-3 flex-row'>
-          <button className='p-2.5 rounded-lg border text-sm flex items-center gap-2'>
+          <button className='p-2.5 rounded-lg border text-sm flex items-center gap-2' onClick={() => signInWithGoogle()}>
             <FcGoogle className='w-5 h-5' />
             Entrar com Google
           </button>

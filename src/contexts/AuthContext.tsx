@@ -1,54 +1,73 @@
-import { createContext, ReactNode, useCallback, useContext, useState, useMemo } from 'react'
-import jwtDecode from 'jwt-decode'
-import Auth from '@/services/auth'
-
-interface UserProps {
-  email: string,
-  name: string
-}
+import { createContext, ReactNode, useCallback, useContext, useState, useMemo, useEffect } from 'react'
+import AuthFireBase from '@/services/firebase/auth'
 
 interface AuthContextDataProps {
-  user: UserProps,
-  singIn: (username: string, password: string) => void,
-  isAuthenticated: boolean
-  singUp: (username: string, password: string, name: string) => Promise<boolean | null>
+    userId: string | null,
+    status: 'checking' | 'authenticated' | 'no-authenticated'
+    signInWithGoogle: () => Promise<void>
+    signInWithCredentials: (password: string, email: string) => Promise<void>,
+    signUpWithCredentials: (username: string, password: string) => Promise<void>
+    logout: () => Promise<void>
+}
+
+
+const initialState: Pick<AuthContextDataProps, 'status' | 'userId'> = {
+    status: 'checking',
+    userId: null
 }
 
 const AuthContext = createContext({} as AuthContextDataProps)
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
-  const [user, setUser] = useState<UserProps>({} as UserProps)
+    const [session, setSession] = useState(initialState)
 
-  const singIn = useCallback(async (username: string, password: string) => {
-    const resp = await Auth.authenticated(username, password)
+    useEffect(() => {
+        AuthFireBase.authStateHasChanged(setSession)
+    }, [])
 
-    if (!resp?.access_token) return
+    console.log({ session })
 
-    const user = jwtDecode(resp.access_token) as { name: string, email: string }
+    const logout = useCallback(async () => {
+        await AuthFireBase.logout()
+        setSession({ userId: null, status: 'no-authenticated' })
+    }, [])
 
-    if (user) {
-      setUser(user)
-      setIsAuthenticated(true)
-    }
+    const validateAuth = useCallback((userId: string | undefined) => {
+        if (userId) return setSession({ userId, status: 'authenticated' })
+        logout()
+    }, [])
 
-  }, [])
+    const signInWithGoogle = useCallback(async () => {
+        setSession(prev => ({...prev, status: 'checking' }))
+        const userId = await AuthFireBase.signInWithGoogle()
+        validateAuth(userId);
+    }, [])
 
-  const singUp = useCallback(async (username: string, password: string, name: string): Promise<boolean | null> => {
-    const resp = await Auth.create(username, password, name)
+    const signInWithCredentials = useCallback(async (password: string, email: string) => {
+        setSession(prev => ({...prev, status: 'checking' }))
+        const userId = await AuthFireBase.loginWithCredentials({ email, password })
+        validateAuth(userId);
+    }, [])
 
-    if (resp?.created) return true
+    const signUpWithCredentials = useCallback(async (email: string, password: string) => {
+        setSession(prev => ({ ...prev, status: 'checking' }))
+        const userId = await AuthFireBase.singnUpWithCredentials({ email, password })
+        validateAuth(userId);
+    }, [])
 
-    return null
-  }, [])
+    const contextValue = useMemo(() => ({
+        ...session,
+        signInWithGoogle,
+        signInWithCredentials,
+        signUpWithCredentials,
+        logout
+    }), [session])
 
-  const context = useMemo(() => ({ singIn, singUp, user, isAuthenticated }), [user, isAuthenticated])
-
-  return (
-    <AuthContext.Provider value={context}>
-      {children}
-    </AuthContext.Provider>
-  )
+    return (
+        <AuthContext.Provider value={contextValue}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
 
 export function useAuth(): AuthContextDataProps {

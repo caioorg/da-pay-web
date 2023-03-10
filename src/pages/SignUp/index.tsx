@@ -22,7 +22,7 @@ const validation = yup.object({
 })
 
 function SingUp() {
-  const { singUp } = useAuth()
+  const { signUpWithCredentials } = useAuth()
   const { addToast } = useNotification()
 
   const { register, handleSubmit, formState: { errors } } = useForm<SingUpForm>({
@@ -30,12 +30,9 @@ function SingUp() {
   })
 
   const fnSubmitForm = useCallback(async ({ email, name, password }: SingUpForm) => {
-    const created = await singUp(email, password, name)
+    await signUpWithCredentials(email, password)
 
-    // TODO: Redirect para tela de Login com Toast informando que foi criado.
-    if (created) return
-
-    addToast({ message: 'Ooops! Não foi possível criar a conta, tente novamente!', type: 'error'})
+    // addToast({ message: 'Ooops! Não foi possível criar a conta, tente novamente!', type: 'error'})
   }, [])
 
   return (

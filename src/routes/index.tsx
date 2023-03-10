@@ -5,12 +5,14 @@ import PublicRoutes from './public.routes'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default () => {
-  const { isAuthenticated } = useAuth()
+  const { status, userId } = useAuth()
+
+  console.log({ status })
 
   return (
     <Router basename='/da-pay-web'>
       <Suspense fallback={<div>loading...</div>}>
-        {!isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
+        {(status === 'authenticated' && userId) ? <PrivateRoutes /> : <PublicRoutes />}
       </Suspense>
     </Router>
   )
